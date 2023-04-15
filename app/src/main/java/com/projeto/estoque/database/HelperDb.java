@@ -1,4 +1,4 @@
-package com.projeto.crud_teste.database;
+package com.projeto.estoque.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,6 +14,7 @@ public class HelperDb extends SQLiteOpenHelper {
     private final String CNT_LOG = "HelperDb";
     private ArrayList<String> createTable;
     private SQLiteDatabase db;
+    private static HelperDb instance;
 
     public HelperDb(Context context, String nomeBanco) {
         super(context, nomeBanco, null, 1);
@@ -23,6 +24,13 @@ public class HelperDb extends SQLiteOpenHelper {
     public HelperDb(Context context) {
         super(context, "db_estoque.db", null, 1);
         createTable = new TabelasSql().getListTabelas();
+    }
+
+    public static synchronized HelperDb getInstance(Context context) {
+        if (instance == null) {
+            instance = new HelperDb(context.getApplicationContext());
+        }
+        return instance;
     }
 
 

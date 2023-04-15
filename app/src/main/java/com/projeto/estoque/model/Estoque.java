@@ -1,20 +1,20 @@
-package com.projeto.crud_teste.model;
+package com.projeto.estoque.model;
 
 import android.content.ContentValues;
 
 import java.util.Date;
 import java.util.List;
 
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_ATIVO;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_DATA;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_DESCRICAO;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_MARCA_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_PRECO_UNIT;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_PRODUTO_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_SALDO;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_TOTAL_MERCADORIA;
-import static com.projeto.crud_teste.database.TabelasSql.sdf;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_ATIVO;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_DATA;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_DESCRICAO;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_MARCA_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_PRECO_UNIT;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_PRODUTO_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_SALDO;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_TOTAL_MERCADORIA;
+import static com.projeto.estoque.database.TabelasSql.sdf;
 
 public class Estoque extends ModelBase{
 

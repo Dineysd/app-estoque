@@ -1,8 +1,10 @@
-package com.projeto.estoque;
+package com.projeto.estoque.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.projeto.estoque.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,26 +1,26 @@
-package com.projeto.crud_teste.database.dao;
+package com.projeto.estoque.database.dao;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.projeto.crud_teste.database.HelperDb;
-import com.projeto.crud_teste.model.Produto;
+import com.projeto.estoque.database.HelperDb;
+import com.projeto.estoque.model.Produto;
 
 import java.text.ParseException;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_ATIVO;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_CATEGORIA_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_DATA;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_DESCRICAO;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_EMBALAGEM_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_MARCA_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_PRECO_UNIT;
-import static com.projeto.crud_teste.database.TabelasSql.sdf;
-import static com.projeto.crud_teste.model.Produto.TABLE_NAME_PRODUTO;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_ATIVO;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_CATEGORIA_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_DATA;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_DESCRICAO;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_EMBALAGEM_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_MARCA_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_PRECO_UNIT;
+import static com.projeto.estoque.database.TabelasSql.sdf;
+import static com.projeto.estoque.model.Produto.TABLE_NAME_PRODUTO;
 
 public class ProdutoDAO implements IBaseDao<Produto> {
 

@@ -1,4 +1,4 @@
-package com.projeto.crud_teste.database.dao;
+package com.projeto.estoque.database.dao;
 
 import java.util.List;
 

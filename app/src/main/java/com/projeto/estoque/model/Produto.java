@@ -1,18 +1,18 @@
-package com.projeto.crud_teste.model;
+package com.projeto.estoque.model;
 
 import android.content.ContentValues;
 
 import java.util.Date;
 
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_ATIVO;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_CATEGORIA_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_DATA;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_DESCRICAO;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_EMBALAGEM_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_MARCA_ID;
-import static com.projeto.crud_teste.database.TabelasSql.COLUMN_PRECO_UNIT;
-import static com.projeto.crud_teste.database.TabelasSql.sdf;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_ATIVO;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_CATEGORIA_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_DATA;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_DESCRICAO;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_EMBALAGEM_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_MARCA_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_PRECO_UNIT;
+import static com.projeto.estoque.database.TabelasSql.sdf;
 
 public class Produto extends ModelBase{
 

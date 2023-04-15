@@ -5,4 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="verde">#008577</color>
     <color name="azul">#00BFFF</color>
+    <color name="error">#F44336</color>
+    <color name="success">#4CAF50</color>
 </resources>

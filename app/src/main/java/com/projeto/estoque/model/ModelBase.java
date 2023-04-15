@@ -1,4 +1,4 @@
-package com.projeto.crud_teste.model;
+package com.projeto.estoque.model;
 
 public abstract class ModelBase {
 
