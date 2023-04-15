@@ -2,7 +2,10 @@ package com.projeto.estoque.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +16,9 @@ import com.projeto.estoque.database.HelperDb;
 import com.projeto.estoque.presenter.LoginContract;
 import com.projeto.estoque.presenter.LoginPresenter;
 import com.projeto.estoque.utils.ToastUtils;
+import com.projeto.estoque.utils.UtilsPermissao;
+
+import static com.projeto.estoque.database.TabelasSql.NAME_DATABASE;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View{
 
@@ -29,6 +35,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         setContentView(R.layout.activity_login);
 
         presenter = new LoginPresenter(this);
+
+        if (!UtilsPermissao.verificarPermissoes(this)) {
+            UtilsPermissao.solicitarPermissoes(this);
+        } else {
+            // permissões já concedidas
+            HelperDb.createDatabase(this);
+        }
 
         // Inicializar os componentes
         emailEditText = findViewById(R.id.email_edit_text);
@@ -73,5 +86,28 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == UtilsPermissao.REQUEST_CODE_PERMISSOES) {
+            boolean todasPermissoesConcedidas = true;
+
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    todasPermissoesConcedidas = false;
+                    break;
+                }
+            }
+
+            if (!todasPermissoesConcedidas) {
+                ToastUtils.showErrorToast(this, "Permissões não concedidas.");
+            } else {
+                // permissões concedidas
+                HelperDb.createDatabase(this);
+            }
+        }
     }
 }

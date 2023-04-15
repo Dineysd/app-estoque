@@ -9,6 +9,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import static com.projeto.estoque.database.TabelasSql.NAME_DATABASE;
+
 public class HelperDb extends SQLiteOpenHelper {
 
     private final String CNT_LOG = "HelperDb";
@@ -22,7 +24,7 @@ public class HelperDb extends SQLiteOpenHelper {
     }
 
     public HelperDb(Context context) {
-        super(context, "db_estoque.db", null, 1);
+        super(context, NAME_DATABASE, null, 1);
         createTable = new TabelasSql().getListTabelas();
     }
 
@@ -31,6 +33,11 @@ public class HelperDb extends SQLiteOpenHelper {
             instance = new HelperDb(context.getApplicationContext());
         }
         return instance;
+    }
+
+    public static void createDatabase(Context context){
+        SQLiteDatabase db = context.openOrCreateDatabase(NAME_DATABASE, Context.MODE_PRIVATE, null);
+        HelperDb.getInstance(context).onCreate(db);
     }
 
 

@@ -4,17 +4,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.projeto.crud_teste.model.Categoria.TABLE_NAME_CATEGORIA;
-import static com.projeto.crud_teste.model.Embalagem.TABLE_NAME_EMBALAGEM;
-import static com.projeto.crud_teste.model.EntradaProduto.TABLE_NAME_ENTRADA_PRODUTO;
-import static com.projeto.crud_teste.model.Estoque.TABLE_NAME_ESTOQUE;
-import static com.projeto.crud_teste.model.Marca.TABLE_NAME_MARCA;
-import static com.projeto.crud_teste.model.Produto.TABLE_NAME_PRODUTO;
-import static com.projeto.crud_teste.model.SaidaProduto.TABLE_NAME_SAIDA_PRODUTO;
+import static com.projeto.estoque.model.Categoria.TABLE_NAME_CATEGORIA;
+import static com.projeto.estoque.model.Embalagem.TABLE_NAME_EMBALAGEM;
+import static com.projeto.estoque.model.EntradaProduto.TABLE_NAME_ENTRADA_PRODUTO;
+import static com.projeto.estoque.model.Estoque.TABLE_NAME_ESTOQUE;
+import static com.projeto.estoque.model.Marca.TABLE_NAME_MARCA;
+import static com.projeto.estoque.model.Produto.TABLE_NAME_PRODUTO;
+import static com.projeto.estoque.model.SaidaProduto.TABLE_NAME_SAIDA_PRODUTO;
 
 public class TabelasSql {
 
-
+    public static final String NAME_DATABASE ="db_estoque.db";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_PRODUTO_ID = "produto_id";
     public static final String COLUMN_SALDO = "saldo";
