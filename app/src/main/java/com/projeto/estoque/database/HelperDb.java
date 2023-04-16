@@ -7,25 +7,40 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.projeto.estoque.database.dao.ProdutoDAO;
+import com.projeto.estoque.model.Produto;
+
 import java.util.ArrayList;
 
+import static com.projeto.estoque.database.TabelasSql.COLUMN_ATIVO;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_CATEGORIA_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_DATA;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_DESCRICAO;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_EMBALAGEM_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_MARCA_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_PRECO_UNIT;
 import static com.projeto.estoque.database.TabelasSql.NAME_DATABASE;
+import static com.projeto.estoque.model.Marca.TABLE_NAME_MARCA;
+import static com.projeto.estoque.model.Produto.TABLE_NAME_PRODUTO;
 
 public class HelperDb extends SQLiteOpenHelper {
 
     private final String CNT_LOG = "HelperDb";
+    private Context context;
     private ArrayList<String> createTable;
     private SQLiteDatabase db;
     private static HelperDb instance;
 
     public HelperDb(Context context, String nomeBanco) {
-        super(context, nomeBanco, null, 1);
+        super(context, nomeBanco, null, 2);
+        this.context = context;
         createTable = new TabelasSql().getListTabelas();
     }
 
     public HelperDb(Context context) {
-        super(context, NAME_DATABASE, null, 1);
+        super(context, NAME_DATABASE, null, 2);
         createTable = new TabelasSql().getListTabelas();
+        this.context = context;
     }
 
     public static synchronized HelperDb getInstance(Context context) {
@@ -37,7 +52,9 @@ public class HelperDb extends SQLiteOpenHelper {
 
     public static void createDatabase(Context context){
         SQLiteDatabase db = context.openOrCreateDatabase(NAME_DATABASE, Context.MODE_PRIVATE, null);
-        HelperDb.getInstance(context).onCreate(db);
+        HelperDb instance = HelperDb.getInstance(context);
+        instance.onCreate(db);
+        //instance.onUpgrade(db,1,2);
     }
 
 
@@ -68,12 +85,37 @@ public class HelperDb extends SQLiteOpenHelper {
             db.endTransaction();
         }
 
-        Log.i(CNT_LOG, "Tabelas criadas");
+        Log.i(CNT_LOG, "Tabelas atualização");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
+        Log.i(CNT_LOG, "Iniciando a atualização das tabelas");
+        if (oldVersion == 1 && newVersion == 2) {
+            // insere 50 produtos aleatórios
+            try {
+                db.beginTransaction();
+                if(new ProdutoDAO(context).buscarTodos().isEmpty()) {
+                    // Inserindo 50 produtos diferentes
+                    for (int i = 1; i <= 50; i++) {
+                        ContentValues values = new ContentValues();
+                        values.put(COLUMN_DESCRICAO, "Produto " + i);
+                        values.put(COLUMN_PRECO_UNIT, 10.0 * i);
+                        values.put(COLUMN_MARCA_ID, i % 5 + 1);
+                        values.put(COLUMN_CATEGORIA_ID, i % 10 + 1);
+                        values.put(COLUMN_EMBALAGEM_ID, i % 3 + 1);
+                        values.put(COLUMN_DATA, "2023-04-14");
+                        values.put(COLUMN_ATIVO, true);
+                        Log.d(CNT_LOG, "onUpgrade: " + i);
+                        db.insert(TABLE_NAME_PRODUTO, null, values);
+                    }
+                }
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+            Log.i(CNT_LOG, "Tabelas atualizadas");
+        }
     }
 
     public long Insert(String tabela, ContentValues values) {

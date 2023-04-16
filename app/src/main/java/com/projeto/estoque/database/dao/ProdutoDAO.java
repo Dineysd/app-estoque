@@ -8,6 +8,7 @@ import com.projeto.estoque.database.HelperDb;
 import com.projeto.estoque.model.Produto;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -48,7 +49,29 @@ public class ProdutoDAO implements IBaseDao<Produto> {
 
     @Override
     public List<Produto> buscarTodos() {
-        return null;
+        List<Produto> produtos = new ArrayList<>();
+        Cursor cursor = null;
+
+        try {
+            cursor = this.database.Select(TABLE_NAME_PRODUTO, campos(), null, null, null, null, null);
+            // Verificar se há resultados
+            if (cursor.moveToFirst()) {
+                // Converter cada registro retornado em um objeto Estoque e adicioná-lo na lista
+                do {
+                    Produto produto = getDados(cursor);
+                    produtos.add(produto);
+                } while (cursor.moveToNext());
+            }
+        }catch (Exception e){
+            Log.d(TAG, "buscarTodos: ");
+
+        }finally {
+            // Fechar o cursor
+            cursor.close();
+        }
+
+
+        return produtos;
     }
 
     @Override
@@ -62,7 +85,7 @@ public class ProdutoDAO implements IBaseDao<Produto> {
             // Verificar se há resultados
             if (cursor.moveToFirst()) {
                 // Converter cada registro retornado em um objeto Estoque e adicioná-lo na lista
-                produto = getDadosEstoque(cursor);
+                produto = getDados(cursor);
             }
         }catch (Exception e){
             Log.d(TAG, "buscarTodos: ");
@@ -74,7 +97,7 @@ public class ProdutoDAO implements IBaseDao<Produto> {
         return produto;
     }
 
-    private Produto getDadosEstoque(Cursor cursor) throws ParseException {
+    private Produto getDados(Cursor cursor) throws ParseException {
         Produto produto = new Produto();
         produto.setId(cursor.getLong(cursor.getColumnIndex(COLUMN_ID)));
         produto.setDescricao(cursor.getString(cursor.getColumnIndex(COLUMN_DESCRICAO)));
