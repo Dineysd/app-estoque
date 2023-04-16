@@ -33,7 +33,7 @@ public class TabelasSql {
     public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     final String CREATE_TABLE_ENTRADA =
-            "CREATE TABLE IF NOT EXIST" + TABLE_NAME_ENTRADA_PRODUTO + "("
+            "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_ENTRADA_PRODUTO + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_PRODUTO_ID + " INTEGER,"
                     + COLUMN_DESCRICAO + " TEXT,"
@@ -44,7 +44,7 @@ public class TabelasSql {
                     + ");";
 
     final String CREATE_TABLE_SAIDA =
-            "CREATE TABLE IF NOT EXIST" + TABLE_NAME_SAIDA_PRODUTO + "("
+            "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_SAIDA_PRODUTO + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_PRODUTO_ID + " INTEGER,"
                     + COLUMN_DESCRICAO + " TEXT,"
@@ -55,7 +55,7 @@ public class TabelasSql {
                     + ");";
 
     final String CREATE_TABLE_ESTOQUE =
-            "CREATE TABLE IF NOT EXIST" + TABLE_NAME_ESTOQUE + "("
+            "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_ESTOQUE + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_PRODUTO_ID + " INTEGER,"
                     + COLUMN_SALDO + " INTEGER,"
@@ -71,7 +71,7 @@ public class TabelasSql {
 
 
     final String CREATE_TABLE_PRODUTO =
-            "CREATE TABLE IF NOT EXIST" + TABLE_NAME_PRODUTO + "("
+            "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_PRODUTO + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_DESCRICAO + " TEXT,"
                     + COLUMN_PRECO_UNIT + " REAL,"
@@ -86,24 +86,24 @@ public class TabelasSql {
                     + ")";
 
     final String CREATE_TABLE_CATEGORIA =
-            "CREATE TABLE IF NOT EXIST" + TABLE_NAME_CATEGORIA + "("
+            "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_CATEGORIA + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_DESCRICAO + " TEXT,"
-                    + COLUMN_ATIVO + " BOOLEAN,"
+                    + COLUMN_ATIVO + " BOOLEAN"
                     + ")";
 
     final String CREATE_TABLE_MARCA =
-            "CREATE TABLE IF NOT EXIST" + TABLE_NAME_MARCA + "("
+            "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_MARCA + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_DESCRICAO + " TEXT,"
-                    + COLUMN_ATIVO + " BOOLEAN,"
+                    + COLUMN_ATIVO + " BOOLEAN"
                     + ")";
 
     final String CREATE_TABLE_EMBALAGEM =
-            "CREATE TABLE IF NOT EXIST" + TABLE_NAME_EMBALAGEM + "("
+            "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_EMBALAGEM + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_DESCRICAO + " TEXT,"
-                    + COLUMN_ATIVO + " BOOLEAN,"
+                    + COLUMN_ATIVO + " BOOLEAN"
                     + ")";
 
     public ArrayList<String> getListTabelas(){
