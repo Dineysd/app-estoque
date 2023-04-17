@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.projeto.estoque.database.HelperDb;
+import com.projeto.estoque.database.TabelasSql;
 import com.projeto.estoque.model.Produto;
 
 import java.text.ParseException;
@@ -67,6 +68,7 @@ public class ProdutoDAO implements IBaseDao<Produto> {
 
         }finally {
             // Fechar o cursor
+            if (cursor != null);
             cursor.close();
         }
 
@@ -92,6 +94,7 @@ public class ProdutoDAO implements IBaseDao<Produto> {
 
         }finally {
             // Fechar o cursor
+            if (cursor != null);
             cursor.close();
         }
         return produto;
@@ -114,9 +117,6 @@ public class ProdutoDAO implements IBaseDao<Produto> {
 
     @Override
     public String[] campos() {
-        return new String[]{
-                COLUMN_ID, COLUMN_DESCRICAO,
-                COLUMN_PRECO_UNIT, COLUMN_DATA,
-                COLUMN_MARCA_ID, COLUMN_CATEGORIA_ID, COLUMN_EMBALAGEM_ID, COLUMN_ATIVO};
+        return TabelasSql.campos(TABLE_NAME_PRODUTO);
     }
 }

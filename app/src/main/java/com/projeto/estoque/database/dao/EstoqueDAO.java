@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.projeto.estoque.database.HelperDb;
+import com.projeto.estoque.database.TabelasSql;
 import com.projeto.estoque.model.Estoque;
 import com.projeto.estoque.model.Marca;
 import com.projeto.estoque.model.Produto;
@@ -24,6 +25,7 @@ import static com.projeto.estoque.database.TabelasSql.COLUMN_PRODUTO_ID;
 import static com.projeto.estoque.database.TabelasSql.COLUMN_SALDO;
 import static com.projeto.estoque.database.TabelasSql.COLUMN_TOTAL_MERCADORIA;
 import static com.projeto.estoque.database.TabelasSql.sdf;
+import static com.projeto.estoque.model.Estoque.TABLE_NAME_ESTOQUE;
 
 public class EstoqueDAO implements IBaseDao<Estoque>{
 
@@ -113,10 +115,7 @@ public class EstoqueDAO implements IBaseDao<Estoque>{
 
     @Override
     public String[] campos() {
-        return new String[]{
-                COLUMN_ID, COLUMN_PRODUTO_ID, COLUMN_DATA,
-                COLUMN_SALDO, COLUMN_TOTAL_MERCADORIA,
-                COLUMN_DESCRICAO, COLUMN_MARCA_ID, COLUMN_PRECO_UNIT, COLUMN_ATIVO};
+        return TabelasSql.campos(TABLE_NAME_ESTOQUE);
     }
 
 

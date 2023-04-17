@@ -1,6 +1,7 @@
 package com.projeto.estoque.model;
 
 public abstract class ModelBase {
+    public static final String TABLE_PADRAO = "padrao";
 
     protected long id;
     protected String descricao;
