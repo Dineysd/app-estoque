@@ -25,14 +25,11 @@ import static com.projeto.estoque.database.TabelasSql.sdf;
 import static com.projeto.estoque.model.Produto.TABLE_NAME_PRODUTO;
 
 public class ProdutoDAO implements IBaseDao<Produto> {
-
-    private Context context;
+    
     private HelperDb database;
-
-
+    
     public ProdutoDAO(Context context) {
         this.database = new HelperDb(context);
-        this.context = context;
     }
 
 
@@ -56,7 +53,7 @@ public class ProdutoDAO implements IBaseDao<Produto> {
         try {
             cursor = this.database.Select(TABLE_NAME_PRODUTO, campos(), null, null, null, null, null);
             // Verificar se há resultados
-            if (cursor.moveToFirst()) {
+            if (cursor != null && cursor.moveToFirst()) {
                 // Converter cada registro retornado em um objeto Estoque e adicioná-lo na lista
                 do {
                     Produto produto = getDados(cursor);
@@ -68,8 +65,9 @@ public class ProdutoDAO implements IBaseDao<Produto> {
 
         }finally {
             // Fechar o cursor
-            if (cursor != null);
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
 
@@ -85,7 +83,7 @@ public class ProdutoDAO implements IBaseDao<Produto> {
             String[] args = {String.valueOf(id)};
             cursor = this.database.Select(TABLE_NAME_PRODUTO, campos(), "where id = ?", args, null, null, COLUMN_DATA);
             // Verificar se há resultados
-            if (cursor.moveToFirst()) {
+            if (cursor != null && cursor.moveToFirst()) {
                 // Converter cada registro retornado em um objeto Estoque e adicioná-lo na lista
                 produto = getDados(cursor);
             }
@@ -94,8 +92,9 @@ public class ProdutoDAO implements IBaseDao<Produto> {
 
         }finally {
             // Fechar o cursor
-            if (cursor != null);
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
         return produto;
     }

@@ -7,8 +7,6 @@ import android.util.Log;
 import com.projeto.estoque.database.HelperDb;
 import com.projeto.estoque.database.TabelasSql;
 import com.projeto.estoque.model.Estoque;
-import com.projeto.estoque.model.Marca;
-import com.projeto.estoque.model.Produto;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -28,14 +26,12 @@ import static com.projeto.estoque.database.TabelasSql.sdf;
 import static com.projeto.estoque.model.Estoque.TABLE_NAME_ESTOQUE;
 
 public class EstoqueDAO implements IBaseDao<Estoque>{
-
-    private Context context;
+    
     private HelperDb database;
 
 
     public EstoqueDAO(Context context) {
         this.database = new HelperDb(context);
-        this.context = context;
     }
 
     @Override
@@ -55,7 +51,7 @@ public class EstoqueDAO implements IBaseDao<Estoque>{
         try {
              cursor = this.database.Select(Estoque.TABLE_NAME_ESTOQUE, campos(), null, null, null, null, null);
             // Verificar se há resultados
-            if (cursor.moveToFirst()) {
+            if (cursor != null && cursor.moveToFirst()) {
                 // Converter cada registro retornado em um objeto Estoque e adicioná-lo na lista
                 do {
                     Estoque estoque = getDadosEstoque(cursor);
@@ -67,7 +63,9 @@ public class EstoqueDAO implements IBaseDao<Estoque>{
 
         }finally {
             // Fechar o cursor
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
 
@@ -99,7 +97,7 @@ public class EstoqueDAO implements IBaseDao<Estoque>{
 
             cursor = this.database.Select(Estoque.TABLE_NAME_ESTOQUE, campos(), "where id = ?", null, null, null, null);
             // Verificar se há resultados
-            if (cursor.moveToFirst()) {
+            if (cursor != null && cursor.moveToFirst()) {
                 // Converter cada registro retornado em um objeto Estoque e adicioná-lo na lista
                 estoque = getDadosEstoque(cursor);
             }
@@ -108,7 +106,9 @@ public class EstoqueDAO implements IBaseDao<Estoque>{
 
         }finally {
             // Fechar o cursor
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
         return estoque;
     }
