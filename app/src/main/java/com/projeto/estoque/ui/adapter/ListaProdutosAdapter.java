@@ -48,26 +48,31 @@ public class ListaProdutosAdapter extends BaseAdapter {
 			holder.descricao = convertView.findViewById(R.id.tvDescricao);
 			holder.preco = convertView.findViewById(R.id.tvPreco);
 			holder.data = convertView.findViewById(R.id.tvData);
+			holder.descricao_marca = convertView.findViewById(R.id.tvMarca);
+			holder.descricao_emb = convertView.findViewById(R.id.tvEmb);
+			holder.descricao_categ = convertView.findViewById(R.id.tvCategoria);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
 		Produto produto = produtos.get(position);
-		holder.descricao.setText(produto.getDescricao());
-		holder.preco.setText(String.format(Locale.getDefault(), "R$ %.2f", produto.getPrecoUnit()));
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		String dataFormatada = sdf.format(produto.getData());
-		holder.data.setText(dataFormatada);
+		holder.descricao.setText("Descricão: "+produto.getDescricao());
+		holder.preco.setText("Preco: "+String.format(Locale.getDefault(), "R$ %.2f", produto.getPrecoUnit()));
+		String dataFormatada = produto.getData()== null? null:
+				new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(produto.getData());
+		holder.data.setText("Data: "+dataFormatada);
+		holder.descricao_marca.setText("Marca: "+produto.getMarca().getDescricao());
+		holder.descricao_categ.setText("Categ.: "+produto.getCategoria().getDescricao());
+		holder.descricao_emb.setText("Emb.: "+produto.getEmbalagem().getDescricao());
 		
 		return convertView;
 		
 	}
 
 	private static class ViewHolder {
-		TextView data;
-		TextView descricao;
-		TextView preco;
+		TextView data, descricao, preco, descricao_marca, descricao_categ, descricao_emb;
+
 	}
 	
 	

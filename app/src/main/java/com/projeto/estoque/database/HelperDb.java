@@ -20,6 +20,9 @@ import static com.projeto.estoque.database.TabelasSql.COLUMN_PRECO_UNIT;
 import static com.projeto.estoque.database.TabelasSql.NAME_DATABASE;
 import static com.projeto.estoque.database.TabelasSql.campos;
 import static com.projeto.estoque.database.TabelasSql.sdf;
+import static com.projeto.estoque.model.Categoria.TABLE_NAME_CATEGORIA;
+import static com.projeto.estoque.model.Embalagem.TABLE_NAME_EMBALAGEM;
+import static com.projeto.estoque.model.Marca.TABLE_NAME_MARCA;
 import static com.projeto.estoque.model.Produto.TABLE_NAME_PRODUTO;
 
 public class HelperDb extends SQLiteOpenHelper {
@@ -98,17 +101,40 @@ public class HelperDb extends SQLiteOpenHelper {
                 if(cursor != null && cursor.getCount() < 50) {
                     // Inserindo 50 produtos diferentes
                     for (int i = 1; i <= 50; i++) {
+
+                        ContentValues valuesMarca = new ContentValues();
+                        valuesMarca.put(COLUMN_DESCRICAO, "MARCA  " + i);
+                        valuesMarca.put(COLUMN_ATIVO, true);
+                        long idMarca = db.insert(TABLE_NAME_MARCA, null, valuesMarca);
+                        Log.d(TABLE_NAME_MARCA, "id: "+idMarca);
+
+                        ContentValues valuesEmb = new ContentValues();
+                        valuesEmb.put(COLUMN_DESCRICAO, "EMBALAGEM  " + i);
+                        valuesEmb.put(COLUMN_ATIVO, true);
+                        long idEmb = db.insert(TABLE_NAME_EMBALAGEM, null, valuesEmb);
+                        Log.d(TABLE_NAME_EMBALAGEM, "id: "+idEmb);
+
+                        ContentValues valuesCat = new ContentValues();
+                        valuesCat.put(COLUMN_DESCRICAO, "CATEGORIA  " + i);
+                        valuesCat.put(COLUMN_ATIVO, true);
+                        long idCategoria = db.insert(TABLE_NAME_CATEGORIA, null, valuesCat);
+                        Log.d(TABLE_NAME_CATEGORIA, "id: "+idCategoria);
+
                         ContentValues values = new ContentValues();
                         values.put(COLUMN_DESCRICAO, "Produto " + i);
                         values.put(COLUMN_PRECO_UNIT, 10.0 * i);
-                        values.put(COLUMN_MARCA_ID, i % 5 + 1);
-                        values.put(COLUMN_CATEGORIA_ID, i % 10 + 1);
-                        values.put(COLUMN_EMBALAGEM_ID, i % 3 + 1);
+                        values.put(COLUMN_MARCA_ID, idMarca);
+                        values.put(COLUMN_CATEGORIA_ID, idCategoria);
+                        values.put(COLUMN_EMBALAGEM_ID, idEmb);
                         values.put(COLUMN_DATA, sdf.format(new Date()));
                         values.put(COLUMN_ATIVO, true);
                         Log.d(CNT_LOG, "onUpgrade: " + i);
                         db.insert(TABLE_NAME_PRODUTO,null,  values);
+
+
                     }
+
+
                 }
                 db.setTransactionSuccessful();
             }catch (Exception e){
@@ -183,6 +209,24 @@ public class HelperDb extends SQLiteOpenHelper {
             this.Open();
 
             c = db.query(tabela, campos, where, whereArgs, groupBy, having, orderBy);
+
+            Log.i(CNT_LOG, "Busca realizada. Total de registros: " + c.getCount());
+        } finally {
+            this.Close();
+        }
+
+        return c;
+    }
+
+    public Cursor QuerySelect(String sql, String[] args) {
+        Cursor c = null;
+
+        this.Open();
+        try {
+            Log.i(CNT_LOG, "Iniciando Busca");
+            this.Open();
+
+            c = db.rawQuery(sql,args);
 
             Log.i(CNT_LOG, "Busca realizada. Total de registros: " + c.getCount());
         } finally {
