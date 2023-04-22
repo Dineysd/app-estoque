@@ -2,6 +2,8 @@ package com.projeto.estoque.model;
 
 import android.content.ContentValues;
 
+import com.projeto.estoque.model.dto.ProdutoDTO;
+
 import java.util.Date;
 
 import static com.projeto.estoque.database.TabelasSql.COLUMN_ATIVO;
@@ -22,6 +24,45 @@ public class Produto extends ModelBase{
     private Marca marca;
     private Categoria categoria;
     private Embalagem embalagem;
+
+    // novos atributos
+    private String codigoProduto;
+    private String codigoFornecedor;
+    private String codigoEmbalagem;
+    private String descricaoEmbalagem;
+    private int quantidadeEmbalagem;
+    private String codigoBarra;
+    private boolean estoqueBaixo;
+    private int quantidadeCaixa;
+    private int saldoEstoque;
+    private boolean permiteVender;
+    private boolean reservado;
+    private double peso;
+    private String status;
+    private String codigoMarca;
+    private double precoCusto;
+
+    public Produto() {}
+
+    public Produto(ProdutoDTO dto) {
+        this.codigoProduto = dto.getCodigoProduto();
+        this.descricao = dto.getDescricaoProduto();
+        this.codigoFornecedor = dto.getCodigoFornecedor();
+        this.codigoEmbalagem = dto.getCodigoEmbalagem();
+        this.descricaoEmbalagem = dto.getDescricaoEmbalagem();
+        this.quantidadeEmbalagem = dto.getQuantidadeEmbalagem();
+        this.codigoBarra = dto.getCodigoBarra();
+        this.estoqueBaixo = dto.isEstoqueBaixo();
+        this.quantidadeCaixa = dto.getQuantidadeCaixa();
+        this.saldoEstoque = dto.getSaldoEstoque();
+        this.permiteVender = dto.isPermiteVender();
+        this.reservado = dto.isReservado();
+        this.peso = dto.getPeso();
+        this.status = dto.getStatus();
+        this.codigoMarca = dto.getCodigoMarca();
+        this.precoCusto = dto.getPrecoCusto();
+    }
+
 
     public Double getPrecoUnit() {
         return precoUnit;
