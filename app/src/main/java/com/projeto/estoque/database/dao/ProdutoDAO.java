@@ -5,6 +5,10 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.projeto.estoque.database.HelperDb;
+import com.projeto.estoque.database.TabelasSql;
+import com.projeto.estoque.model.Categoria;
+import com.projeto.estoque.model.Embalagem;
+import com.projeto.estoque.model.Marca;
 import com.projeto.estoque.model.Produto;
 
 import java.text.ParseException;
@@ -24,14 +28,11 @@ import static com.projeto.estoque.database.TabelasSql.sdf;
 import static com.projeto.estoque.model.Produto.TABLE_NAME_PRODUTO;
 
 public class ProdutoDAO implements IBaseDao<Produto> {
-
-    private Context context;
+    
     private HelperDb database;
-
-
+    
     public ProdutoDAO(Context context) {
         this.database = new HelperDb(context);
-        this.context = context;
     }
 
 
@@ -53,9 +54,19 @@ public class ProdutoDAO implements IBaseDao<Produto> {
         Cursor cursor = null;
 
         try {
-            cursor = this.database.Select(TABLE_NAME_PRODUTO, campos(), null, null, null, null, null);
+
+            String sql = "SELECT p.* , m.id AS marca_id, m.descricao AS descricaoMarca," +
+                    " c.id AS categoria_id, c.descricao AS descricaoCategoria, e.id AS embalagem_id," +
+                    " e.descricao AS descricaoEmbalagem " +
+                    "FROM Produto p " +
+                    "LEFT JOIN Marca m ON p.marca_id = m.id " +
+                    "LEFT JOIN Categoria c ON p.categoria_id = c.id " +
+                    "LEFT JOIN Embalagem e ON p.embalagem_id = e.id";
+
+
+            cursor = this.database.QuerySelect(sql, null);
             // Verificar se há resultados
-            if (cursor.moveToFirst()) {
+            if (cursor != null && cursor.moveToFirst()) {
                 // Converter cada registro retornado em um objeto Estoque e adicioná-lo na lista
                 do {
                     Produto produto = getDados(cursor);
@@ -67,7 +78,9 @@ public class ProdutoDAO implements IBaseDao<Produto> {
 
         }finally {
             // Fechar o cursor
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
 
@@ -83,7 +96,7 @@ public class ProdutoDAO implements IBaseDao<Produto> {
             String[] args = {String.valueOf(id)};
             cursor = this.database.Select(TABLE_NAME_PRODUTO, campos(), "where id = ?", args, null, null, COLUMN_DATA);
             // Verificar se há resultados
-            if (cursor.moveToFirst()) {
+            if (cursor != null && cursor.moveToFirst()) {
                 // Converter cada registro retornado em um objeto Estoque e adicioná-lo na lista
                 produto = getDados(cursor);
             }
@@ -92,7 +105,9 @@ public class ProdutoDAO implements IBaseDao<Produto> {
 
         }finally {
             // Fechar o cursor
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
         return produto;
     }
@@ -102,9 +117,9 @@ public class ProdutoDAO implements IBaseDao<Produto> {
         produto.setId(cursor.getLong(cursor.getColumnIndex(COLUMN_ID)));
         produto.setDescricao(cursor.getString(cursor.getColumnIndex(COLUMN_DESCRICAO)));
         produto.setPrecoUnit(cursor.getDouble(cursor.getColumnIndex(COLUMN_PRECO_UNIT)));
-        produto.getCategoria().setId(cursor.getLong(cursor.getColumnIndex(COLUMN_CATEGORIA_ID)));
-        produto.getMarca().setId(cursor.getLong(cursor.getColumnIndex(COLUMN_MARCA_ID)));
-        produto.getEmbalagem().setId(cursor.getLong(cursor.getColumnIndex(COLUMN_EMBALAGEM_ID)));
+        produto.setCategoria(new Categoria(cursor));
+        produto.setMarca(new Marca(cursor));
+        produto.setEmbalagem(new Embalagem(cursor));
         if (cursor.getString(cursor.getColumnIndex(COLUMN_DATA)) != null) {
             produto.setData(sdf.parse(cursor.getString(cursor.getColumnIndex(COLUMN_DATA))));
         }
@@ -114,9 +129,6 @@ public class ProdutoDAO implements IBaseDao<Produto> {
 
     @Override
     public String[] campos() {
-        return new String[]{
-                COLUMN_ID, COLUMN_DESCRICAO,
-                COLUMN_PRECO_UNIT, COLUMN_DATA,
-                COLUMN_MARCA_ID, COLUMN_CATEGORIA_ID, COLUMN_EMBALAGEM_ID, COLUMN_ATIVO};
+        return TabelasSql.campos(TABLE_NAME_PRODUTO);
     }
 }

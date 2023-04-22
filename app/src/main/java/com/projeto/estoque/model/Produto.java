@@ -24,6 +24,12 @@ public class Produto extends ModelBase{
     private Marca marca;
     private Categoria categoria;
     private Embalagem embalagem;
+    
+    public Produto(){
+        this.marca = new Marca();
+        this.categoria = new Categoria();
+        this.embalagem = new Embalagem();
+    }
 
     // novos atributos
     private String codigoProduto;

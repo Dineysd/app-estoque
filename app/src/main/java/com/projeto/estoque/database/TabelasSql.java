@@ -9,6 +9,7 @@ import static com.projeto.estoque.model.Embalagem.TABLE_NAME_EMBALAGEM;
 import static com.projeto.estoque.model.EntradaProduto.TABLE_NAME_ENTRADA_PRODUTO;
 import static com.projeto.estoque.model.Estoque.TABLE_NAME_ESTOQUE;
 import static com.projeto.estoque.model.Marca.TABLE_NAME_MARCA;
+import static com.projeto.estoque.model.ModelBase.TABLE_PADRAO;
 import static com.projeto.estoque.model.Produto.TABLE_NAME_PRODUTO;
 import static com.projeto.estoque.model.SaidaProduto.TABLE_NAME_SAIDA_PRODUTO;
 
@@ -117,5 +118,44 @@ public class TabelasSql {
         tabelas.add(CREATE_TABLE_SAIDA);
 
         return tabelas;
+    }
+    
+    public static String[] campos(String tabelaProduto){
+        
+        switch (tabelaProduto){
+            case TABLE_NAME_PRODUTO:
+                return new String[]{
+                        COLUMN_ID, COLUMN_DESCRICAO,
+                        COLUMN_PRECO_UNIT, COLUMN_DATA,
+                        COLUMN_MARCA_ID, COLUMN_CATEGORIA_ID, COLUMN_EMBALAGEM_ID, COLUMN_ATIVO};
+                
+            case TABLE_NAME_ESTOQUE:
+                return new String[]{
+                        COLUMN_ID, COLUMN_PRODUTO_ID, COLUMN_DATA,
+                        COLUMN_SALDO, COLUMN_TOTAL_MERCADORIA,
+                        COLUMN_DESCRICAO, COLUMN_MARCA_ID, COLUMN_PRECO_UNIT, COLUMN_ATIVO};
+                
+            case TABLE_NAME_MARCA:
+                return new String[]{};
+                
+            case TABLE_NAME_CATEGORIA:
+                return new String[]{};
+            case TABLE_NAME_EMBALAGEM:
+                return new String[]{};
+                
+            case TABLE_NAME_SAIDA_PRODUTO:
+                return new String[]{};
+            case TABLE_NAME_ENTRADA_PRODUTO:
+                return new String[]{};
+                
+            case TABLE_PADRAO:
+                return new String[]{COLUMN_ID, COLUMN_DESCRICAO, COLUMN_ATIVO};
+                
+            default:
+            
+        }
+        
+        return null;
+        
     }
 }
