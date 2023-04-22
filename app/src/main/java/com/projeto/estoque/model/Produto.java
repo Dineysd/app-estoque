@@ -48,8 +48,6 @@ public class Produto extends ModelBase{
     private String codigoMarca;
     private double precoCusto;
 
-    public Produto() {}
-
     public Produto(ProdutoDTO dto) {
         this.codigoProduto = dto.getCodigoProduto();
         this.descricao = dto.getDescricaoProduto();
