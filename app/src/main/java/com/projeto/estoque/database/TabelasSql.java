@@ -24,7 +24,7 @@ public class TabelasSql {
     public static final String COLUMN_MARCA_ID = "marca_id";
     public static final String COLUMN_PRECO_UNIT = "preco_unit";
     public static final String COLUMN_PRECOUNI = "preco_uni";
-    public static final String COLUMN_CATEGORIA_ID = "categoria_id";
+    public static final String COLUMN_CODIGO_BARRA = "codigo_barra";
     public static final String COLUMN_EMBALAGEM_ID = "embalagem_id";
     public static final String COLUMN_QUANTIDADE = "quantidade";
     public static final String COLUMN_DATA ="data";
@@ -73,16 +73,15 @@ public class TabelasSql {
 
     final String CREATE_TABLE_PRODUTO =
             "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_PRODUTO + "("
-                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_ID + " INTEGER,"
                     + COLUMN_DESCRICAO + " TEXT,"
                     + COLUMN_PRECO_UNIT + " REAL,"
                     + COLUMN_MARCA_ID + " INTEGER,"
-                    + COLUMN_CATEGORIA_ID + " INTEGER,"
+                    + COLUMN_CODIGO_BARRA + " TEXT PRIMARY KEY,"
                     + COLUMN_EMBALAGEM_ID + " INTEGER,"
                     + COLUMN_DATA + " DATE,"
                     + COLUMN_ATIVO + " BOOLEAN,"
                     + "FOREIGN KEY(" + COLUMN_MARCA_ID + ") REFERENCES marca(id),"
-                    + "FOREIGN KEY(" + COLUMN_CATEGORIA_ID + ") REFERENCES categoria(id),"
                     + "FOREIGN KEY(" + COLUMN_EMBALAGEM_ID + ") REFERENCES embalagem(id)"
                     + ")";
 
@@ -95,14 +94,14 @@ public class TabelasSql {
 
     final String CREATE_TABLE_MARCA =
             "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_MARCA + "("
-                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_ID + " INTEGER PRIMARY KEY,"
                     + COLUMN_DESCRICAO + " TEXT,"
                     + COLUMN_ATIVO + " BOOLEAN"
                     + ")";
 
     final String CREATE_TABLE_EMBALAGEM =
             "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_EMBALAGEM + "("
-                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_ID + " INTEGER PRIMARY KEY,"
                     + COLUMN_DESCRICAO + " TEXT,"
                     + COLUMN_ATIVO + " BOOLEAN"
                     + ")";
@@ -127,7 +126,7 @@ public class TabelasSql {
                 return new String[]{
                         COLUMN_ID, COLUMN_DESCRICAO,
                         COLUMN_PRECO_UNIT, COLUMN_DATA,
-                        COLUMN_MARCA_ID, COLUMN_CATEGORIA_ID, COLUMN_EMBALAGEM_ID, COLUMN_ATIVO};
+                        COLUMN_MARCA_ID, COLUMN_CODIGO_BARRA, COLUMN_EMBALAGEM_ID, COLUMN_ATIVO};
                 
             case TABLE_NAME_ESTOQUE:
                 return new String[]{

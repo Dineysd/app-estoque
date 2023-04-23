@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.projeto.estoque.database.TabelasSql.COLUMN_ATIVO;
-import static com.projeto.estoque.database.TabelasSql.COLUMN_CATEGORIA_ID;
 import static com.projeto.estoque.database.TabelasSql.COLUMN_DATA;
 import static com.projeto.estoque.database.TabelasSql.COLUMN_DESCRICAO;
 import static com.projeto.estoque.database.TabelasSql.COLUMN_EMBALAGEM_ID;
@@ -56,7 +55,7 @@ public class HelperDb extends SQLiteOpenHelper {
         SQLiteDatabase db = context.openOrCreateDatabase(NAME_DATABASE, Context.MODE_PRIVATE, null);
         HelperDb instance = HelperDb.getInstance(context);
         instance.onCreate(db);
-        instance.onUpgrade(db,1,2);
+        //instance.onUpgrade(db,1,2);
     }
 
 
@@ -93,57 +92,57 @@ public class HelperDb extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.i(CNT_LOG, "Iniciando a atualização das tabelas");
-        if (oldVersion == 1 && newVersion == 2) {
-            // insere 50 produtos aleatórios
-            try {
-                db.beginTransaction();
-                Cursor cursor = db.query(TABLE_NAME_PRODUTO, campos(TABLE_NAME_PRODUTO), null, null, null, null, null);
-                if(cursor != null && cursor.getCount() < 50) {
-                    // Inserindo 50 produtos diferentes
-                    for (int i = 1; i <= 50; i++) {
-
-                        ContentValues valuesMarca = new ContentValues();
-                        valuesMarca.put(COLUMN_DESCRICAO, "MARCA  " + i);
-                        valuesMarca.put(COLUMN_ATIVO, true);
-                        long idMarca = db.insert(TABLE_NAME_MARCA, null, valuesMarca);
-                        Log.d(TABLE_NAME_MARCA, "id: "+idMarca);
-
-                        ContentValues valuesEmb = new ContentValues();
-                        valuesEmb.put(COLUMN_DESCRICAO, "EMBALAGEM  " + i);
-                        valuesEmb.put(COLUMN_ATIVO, true);
-                        long idEmb = db.insert(TABLE_NAME_EMBALAGEM, null, valuesEmb);
-                        Log.d(TABLE_NAME_EMBALAGEM, "id: "+idEmb);
-
-                        ContentValues valuesCat = new ContentValues();
-                        valuesCat.put(COLUMN_DESCRICAO, "CATEGORIA  " + i);
-                        valuesCat.put(COLUMN_ATIVO, true);
-                        long idCategoria = db.insert(TABLE_NAME_CATEGORIA, null, valuesCat);
-                        Log.d(TABLE_NAME_CATEGORIA, "id: "+idCategoria);
-
-                        ContentValues values = new ContentValues();
-                        values.put(COLUMN_DESCRICAO, "Produto " + i);
-                        values.put(COLUMN_PRECO_UNIT, 10.0 * i);
-                        values.put(COLUMN_MARCA_ID, idMarca);
-                        values.put(COLUMN_CATEGORIA_ID, idCategoria);
-                        values.put(COLUMN_EMBALAGEM_ID, idEmb);
-                        values.put(COLUMN_DATA, sdf.format(new Date()));
-                        values.put(COLUMN_ATIVO, true);
-                        Log.d(CNT_LOG, "onUpgrade: " + i);
-                        db.insert(TABLE_NAME_PRODUTO,null,  values);
-
-
-                    }
-
-
-                }
-                db.setTransactionSuccessful();
-            }catch (Exception e){
-                Log.d(CNT_LOG, "erro ao atualizar Tabelas: "+e);
-            }finally {
-                db.endTransaction();
-            }
-            Log.i(CNT_LOG, "Tabelas atualizadas");
-        }
+//        if (oldVersion == 1 && newVersion == 2) {
+//            // insere 50 produtos aleatórios
+//            try {
+//                db.beginTransaction();
+//                Cursor cursor = db.query(TABLE_NAME_PRODUTO, campos(TABLE_NAME_PRODUTO), null, null, null, null, null);
+//                if(cursor != null && cursor.getCount() < 50) {
+//                    // Inserindo 50 produtos diferentes
+//                    for (int i = 1; i <= 50; i++) {
+//
+//                        ContentValues valuesMarca = new ContentValues();
+//                        valuesMarca.put(COLUMN_DESCRICAO, "MARCA  " + i);
+//                        valuesMarca.put(COLUMN_ATIVO, true);
+//                        long idMarca = db.insert(TABLE_NAME_MARCA, null, valuesMarca);
+//                        Log.d(TABLE_NAME_MARCA, "id: "+idMarca);
+//
+//                        ContentValues valuesEmb = new ContentValues();
+//                        valuesEmb.put(COLUMN_DESCRICAO, "EMBALAGEM  " + i);
+//                        valuesEmb.put(COLUMN_ATIVO, true);
+//                        long idEmb = db.insert(TABLE_NAME_EMBALAGEM, null, valuesEmb);
+//                        Log.d(TABLE_NAME_EMBALAGEM, "id: "+idEmb);
+//
+//                        ContentValues valuesCat = new ContentValues();
+//                        valuesCat.put(COLUMN_DESCRICAO, "CATEGORIA  " + i);
+//                        valuesCat.put(COLUMN_ATIVO, true);
+//                        long idCategoria = db.insert(TABLE_NAME_CATEGORIA, null, valuesCat);
+//                        Log.d(TABLE_NAME_CATEGORIA, "id: "+idCategoria);
+//
+//                        ContentValues values = new ContentValues();
+//                        values.put(COLUMN_DESCRICAO, "Produto " + i);
+//                        values.put(COLUMN_PRECO_UNIT, 10.0 * i);
+//                        values.put(COLUMN_MARCA_ID, idMarca);
+//                        values.put(COLUMN_CATEGORIA_ID, idCategoria);
+//                        values.put(COLUMN_EMBALAGEM_ID, idEmb);
+//                        values.put(COLUMN_DATA, sdf.format(new Date()));
+//                        values.put(COLUMN_ATIVO, true);
+//                        Log.d(CNT_LOG, "onUpgrade: " + i);
+//                        db.insert(TABLE_NAME_PRODUTO,null,  values);
+//
+//
+//                    }
+//
+//
+//                }
+//                db.setTransactionSuccessful();
+//            }catch (Exception e){
+//                Log.d(CNT_LOG, "erro ao atualizar Tabelas: "+e);
+//            }finally {
+//                db.endTransaction();
+//            }
+//            Log.i(CNT_LOG, "Tabelas atualizadas");
+//        }
     }
 
     public long Insert(String tabela, ContentValues values) {

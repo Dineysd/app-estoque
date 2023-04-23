@@ -7,7 +7,7 @@ import com.projeto.estoque.model.dto.ProdutoDTO;
 import java.util.Date;
 
 import static com.projeto.estoque.database.TabelasSql.COLUMN_ATIVO;
-import static com.projeto.estoque.database.TabelasSql.COLUMN_CATEGORIA_ID;
+import static com.projeto.estoque.database.TabelasSql.COLUMN_CODIGO_BARRA;
 import static com.projeto.estoque.database.TabelasSql.COLUMN_DATA;
 import static com.projeto.estoque.database.TabelasSql.COLUMN_DESCRICAO;
 import static com.projeto.estoque.database.TabelasSql.COLUMN_EMBALAGEM_ID;
@@ -32,29 +32,28 @@ public class Produto extends ModelBase{
     }
 
     // novos atributos
-    private String codigoProduto;
     private String codigoFornecedor;
-    private String codigoEmbalagem;
     private String descricaoEmbalagem;
     private int quantidadeEmbalagem;
     private String codigoBarra;
-    private boolean estoqueBaixo;
+    private int estoqueBaixo;
     private int quantidadeCaixa;
     private int saldoEstoque;
-    private boolean permiteVender;
-    private boolean reservado;
-    private double peso;
+    private int permiteVender;
+    private int reservado;
+    private String peso;
     private String status;
-    private String codigoMarca;
     private double precoCusto;
 
     public Produto(ProdutoDTO dto) {
-        this.codigoProduto = dto.getCodigoProduto();
+        this.marca = new Marca();
+        this.embalagem = new Embalagem();
+        this.id = Long.valueOf(dto.getCodigoProduto().trim());
         this.descricao = dto.getDescricaoProduto();
         this.codigoFornecedor = dto.getCodigoFornecedor();
-        this.codigoEmbalagem = dto.getCodigoEmbalagem();
         this.descricaoEmbalagem = dto.getDescricaoEmbalagem();
         this.quantidadeEmbalagem = dto.getQuantidadeEmbalagem();
+        this.data = new Date();
         this.codigoBarra = dto.getCodigoBarra();
         this.estoqueBaixo = dto.isEstoqueBaixo();
         this.quantidadeCaixa = dto.getQuantidadeCaixa();
@@ -63,8 +62,15 @@ public class Produto extends ModelBase{
         this.reservado = dto.isReservado();
         this.peso = dto.getPeso();
         this.status = dto.getStatus();
-        this.codigoMarca = dto.getCodigoMarca();
+        this.ativo = true;
         this.precoCusto = dto.getPrecoCusto();
+        this.precoUnit = dto.getPrecoCusto();
+        this.embalagem.setId(Long.valueOf(dto.getCodigoEmbalagem().trim()));
+        this.embalagem.setDescricao(dto.getDescricaoEmbalagem());
+        this.embalagem.setAtivo(true);
+        this.marca.setId(Long.valueOf(dto.getCodigoMarca().trim()));
+        this.marca.setDescricao("Marca");
+        this.marca.setAtivo(true);
     }
 
 
@@ -86,6 +92,14 @@ public class Produto extends ModelBase{
 
     public Marca getMarca() {
         return marca;
+    }
+
+    public void setCodigoBarra(String codigoBarra) {
+        this.codigoBarra = codigoBarra;
+    }
+
+    public String getCodigoBarra() {
+        return codigoBarra;
     }
 
     public void setMarca(Marca marca) {
@@ -117,7 +131,7 @@ public class Produto extends ModelBase{
         values.put(COLUMN_PRECO_UNIT, precoUnit);
         values.put(COLUMN_DATA, data == null?null: sdf.format(this.data));
         values.put(COLUMN_MARCA_ID, marca.getId());
-        values.put(COLUMN_CATEGORIA_ID, categoria.getId());
+        values.put(COLUMN_CODIGO_BARRA, codigoBarra);
         values.put(COLUMN_EMBALAGEM_ID, embalagem.getId());
         values.put(COLUMN_ATIVO, ativo? 1:0);
         return values;
